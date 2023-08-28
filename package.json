@@ -4,7 +4,7 @@
   "description": "home work repo for nodejs global mentoring program",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon localhost 8080"
+    "start": "nodemon"
   },
   "repository": {
     "type": "git",
