@@ -4,8 +4,7 @@
   "description": "home work repo for nodejs global mentoring program",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    ""
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -16,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/IGsayonara/nodejs-global-mentoring-program/issues"
   },
-  "homepage": "https://github.com/IGsayonara/nodejs-global-mentoring-program#readme"
+  "homepage": "https://github.com/IGsayonara/nodejs-global-mentoring-program#readme",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
 }
