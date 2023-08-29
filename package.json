@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/IGsayonara/nodejs-global-mentoring-program.git"
+    "url": "git+https://github.com/IGsayonara/node-js-global-mentoring-program.git"
   },
   "author": "IGsayonara",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/IGsayonara/nodejs-global-mentoring-program/issues"
+    "url": "https://github.com/IGsayonara/node-js-global-mentoring-program/issues"
   },
-  "homepage": "https://github.com/IGsayonara/nodejs-global-mentoring-program#readme",
+  "homepage": "https://github.com/IGsayonara/node-js-global-mentoring-program#readme",
   "devDependencies": {
     "nodemon": "^3.0.1"
   }
