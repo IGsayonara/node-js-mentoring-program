@@ -1,0 +1,22 @@
+{
+  "name": "didunik-node-js-global-mentoring-program",
+  "version": "1.0.0",
+  "description": "home work repo for nodejs global mentoring program",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IGsayonara/node-js-mentoring-program.git"
+  },
+  "author": "IGsayonara",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IGsayonara/node-js-mentoring-program/issues"
+  },
+  "homepage": "https://github.com/IGsayonara/node-js-mentoring-program#readme",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
