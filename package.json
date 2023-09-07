@@ -2,7 +2,7 @@
   "name": "didunik-node-js-global-mentoring-program",
   "version": "1.0.0",
   "description": "home work repo for nodejs global mentoring program",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "start": "nodemon"
   },
@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/IGsayonara/node-js-mentoring-program#readme",
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
   }
 }
