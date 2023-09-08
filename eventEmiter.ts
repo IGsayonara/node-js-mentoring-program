@@ -30,16 +30,15 @@ export class EventEmitter {
 
     once(eventName, fn) {
         const callback = (...args)=> {
-            fn(args);
+            fn(...args);
             this.removeListener(eventName, callback);
         }
         this.addListener(eventName, callback);
-
     }
 
     emit(eventName, ...args) {
         this.listeners[eventName]?.forEach((fn) => {
-            fn(args);
+            fn(...args);
         })
     }
 
