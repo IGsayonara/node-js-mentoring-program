@@ -3,7 +3,7 @@ import {EventEmitter} from "./eventEmiter.ts";
 class WithTime extends EventEmitter {
     execute(asyncFunc, ...args) {
         const beginTime = Date.now();
-        this.emit('begin', {
+        super.emit('begin', {
             asyncFunc,
             beginTime,
         });
@@ -12,7 +12,7 @@ class WithTime extends EventEmitter {
         }
         asyncWrapFunction().then((data) => {
             const endTime = Date.now();
-            this.emit('end', {
+            super.emit('end', {
                 asyncFunc,
                 beginTime,
                 endTime,
@@ -20,6 +20,11 @@ class WithTime extends EventEmitter {
                 result: data,
             });
         });
+    }
+    emit(eventName: string, ...args) {
+        const reservedNames = ['begin', 'end'];
+        if(!reservedNames.includes(eventName)) super.emit(eventName, ...args);
+        else console.error(eventName + ' is reserved name');
     }
 }
 
@@ -31,6 +36,7 @@ const withTime = new WithTime();
 
 withTime.on('begin', console.log);
 withTime.on('end', console.log);
+withTime.emit('end', 123);
 
 withTime.execute(asyncFunc);
 
