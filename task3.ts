@@ -4,8 +4,6 @@ import {Converter} from "csvtojson/v2/Converter";
 
 const csv = require('csvtojson');
 
-const state: {converter: Converter | null} = {converter: null}
-
 const rl = readline.createInterface(
     {
         input: fs.createReadStream('./csvdirectory/nodejs-hw1-ex1.csv'),
@@ -27,10 +25,14 @@ const lineByLine = async () => {
         const converter: Converter = csv({noheader: true, headers});
         converter.fromString(line).then((lines) => {
             const output = JSON.stringify(lines[0]);
-            ws.write(output + '\n');
+            ws.write(output + '\n', (error) => {
+                if(error) console.error('smth went wrong with output', error);
+            });
         });
         lineIndex++;
     }
 }
 
-lineByLine();
+lineByLine().catch((error)=> {
+    console.error('smth went wrong with input', error);
+});

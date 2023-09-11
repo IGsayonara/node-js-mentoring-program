@@ -4,7 +4,10 @@
   "description": "home work repo for nodejs global mentoring program",
   "main": "index.ts",
   "scripts": {
-    "start": "nodemon"
+    "start": "nodemon",
+    "task1": "nodemon",
+    "task2": "nodemon withTime",
+    "task3": "nodemon task2"
   },
   "repository": {
     "type": "git",
