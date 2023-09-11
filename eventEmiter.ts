@@ -13,10 +13,9 @@ export class EventEmitter {
         }
     }
 
-    on(eventName, fn) {
-    }
+    on(eventName: string, fn: Function) {}
 
-    removeListener(eventName, fn) {
+    removeListener(eventName: string, fn: Function) {
         const index = this.listeners[eventName]?.findIndex((listener) => {
             return listener === fn;
         });
@@ -25,10 +24,9 @@ export class EventEmitter {
         }
     }
 
-    off(eventName, fn) {
-    }
+    off(eventName: string, fn: Function) {}
 
-    once(eventName, fn) {
+    once(eventName: string, fn: Function) {
         const callback = (...args)=> {
             fn(...args);
             this.removeListener(eventName, callback);
@@ -36,17 +34,17 @@ export class EventEmitter {
         this.addListener(eventName, callback);
     }
 
-    emit(eventName, ...args) {
+    emit(eventName: string, ...args) {
         this.listeners[eventName]?.forEach((fn) => {
             fn(...args);
         })
     }
 
-    listenerCount(eventName) {
+    listenerCount(eventName: string) {
         return this.listeners[eventName]?.length || 0;
     }
 
-    rawListeners(eventName) {
+    rawListeners(eventName: string) {
         return this.listeners[eventName] || [];
     }
 }
