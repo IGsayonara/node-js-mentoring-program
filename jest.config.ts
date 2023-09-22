@@ -5,5 +5,10 @@ module.exports = {
     silent: false,
     verbose: true,
     collectCoverageFrom: ['./task4/src/**'],
-    coverageReporters: ['text']
+    coverageReporters: ['text'],
+    coverageThreshold: {
+        global: {
+            lines: 90
+        }
+    }
 };
