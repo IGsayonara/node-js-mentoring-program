@@ -1,6 +1,6 @@
-import {mergeDeep} from "./deep.merge.util.ts";
-import {getPostData} from "./request-data.util.ts";
-import {stop} from "./timeout.util.ts";
+import {mergeDeep} from "../utils/deep.merge.util.ts";
+import {getPostData} from "../utils/request-data.util.ts";
+import {stop} from "../utils/timeout.util.ts";
 
 export type Method =
     | 'GET'

@@ -1,5 +1,5 @@
-import {userState} from "./database-impl.ts";
-import {UserDTO, UserPayload, UserState} from "./types.ts";
+import {userState} from "../core/database-impl.ts";
+import {UserDTO, UserPayload, UserState} from "../types.ts";
 
 export default class UserEntity {
     static state: UserState[] = userState;

@@ -1,4 +1,4 @@
-import {UserHobbyDTO} from "./types.ts";
+import {UserHobbyDTO} from "../types.ts";
 
 const hobbyCache: Record<string, UserHobbyDTO[]> = {};
 

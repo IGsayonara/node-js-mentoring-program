@@ -1,6 +1,6 @@
-import {Controller} from "./controller.ts";
-import HobbyEntity from "./hobby.entity.ts";
-import {addToCache, getCache, resetCache} from "./hobby.cache.ts";
+import {Controller} from "../core/controller.ts";
+import HobbyEntity from "../entities/hobby.entity.ts";
+import {addToCache, getCache, resetCache} from "../cache/hobby.cache.ts";
 
 const hobbyEntity = new HobbyEntity();
 const hobbyController = new Controller();

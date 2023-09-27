@@ -1,5 +1,5 @@
-import {Controller} from "./controller.ts";
-import UserEntity from "./user.entity.ts";
+import {Controller} from "../core/controller.ts";
+import UserEntity from "../entities/user.entity.ts";
 
 const userEntity = new UserEntity();
 const userController = new Controller();

@@ -1,4 +1,4 @@
-import {mainController} from "./src/main.controller.ts";
+import {mainController} from "./src/controllers/main.controller.ts";
 const http = require('http');
 
 const server = http.createServer(async (req, res) => {

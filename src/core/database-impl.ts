@@ -1,4 +1,4 @@
-import {UserState} from "./types.ts";
+import {UserState} from "../types.ts";
 
 const initialUsersState: UserState[] = [
     {

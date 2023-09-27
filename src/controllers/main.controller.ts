@@ -1,4 +1,4 @@
-import {Controller} from "./controller.ts";
+import {Controller} from "../core/controller.ts";
 import userController from "./user.controller.ts";
 import hobbyController from "./hobby.controller.ts";
 

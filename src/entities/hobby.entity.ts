@@ -1,6 +1,6 @@
-import {userState} from "./database-impl.ts";
-import {UserHobby, UserHobbyDTO, UserState} from "./types.ts";
-import {stop} from "./timeout.util.ts";
+import {userState} from "../core/database-impl.ts";
+import {UserHobby, UserHobbyDTO, UserState} from "../types.ts";
+import {stop} from "../utils/timeout.util.ts";
 
 export default class HobbyEntity {
     static state: UserState[] = userState;
