@@ -1,10 +1,10 @@
-import {
-    checkIfTodayIsPublicHoliday,
-    getListOfPublicHolidays,
-    getNextPublicHolidays
-} from "./task4/src/services/public-holidays.service.ts";
+import {mainController} from "./src/main.controller.ts";
+const http = require('http');
 
+const server = http.createServer(async (req, res) => {
+    await mainController.execute(req, res);
+});
 
-getListOfPublicHolidays(2023, 'DE').then(console.log)
-// getNextPublicHolidays('DE').then(console.log)
-// checkIfTodayIsPublicHoliday('DE').then(console.log)
+server.listen(3000, () => {
+    console.log('Server is running on port 3000');
+});
