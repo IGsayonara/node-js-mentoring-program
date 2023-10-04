@@ -10,22 +10,20 @@ export const getAllUsers = (): UserEntity[] => {
 
 export const getUserById = (userId: string): UserEntity => {
     const user = userTable.find(({id}) => id === userId);
-    if(!user) throw "User not found";
 
     return deepClone(user);
 }
 
-export const assignActiveCartToUser = (userId: string, cartId: string) => {
-    const index = userTable.findIndex(({id}) => id === userId);
-    if(index < 0) throw "User not found";
+export const assignActiveCartToUser = (userId: string, cartId: string | null) => {
+    const userIndex = userTable.findIndex(({id}) => id === userId);
+    const cartIndex = cartTable.findIndex(({id}) => id === cartId);
 
-    const cart = cartTable.find(({id}) => id === cartId);
+    if(cartId !== null){
+        if (cartIndex < 0 || cartTable[cartIndex].isDeleted) throw {message: "Cart not found", code: 404};
+    }
 
-    if (!cart) throw "Cart not found";
-    if(cart.isDeleted) throw "Cart is not active";
-
-    userTable[index].activeCartId = cartId;
+    userTable[userIndex].activeCartId = cartId;
     cartTable
-        .filter((cart, cartIndex) => cart.userId === cartId && !cart.isDeleted && cartIndex !== index)
+        .filter((cart, index) => cart.userId === cartId && !cart.isDeleted && cartIndex !== index)
         .forEach((cart) => cart.isDeleted = true)
 }

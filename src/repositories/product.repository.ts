@@ -4,7 +4,7 @@ import {ProductEntity} from "../entities/product.entity.ts";
 
 export const getProductById = (productId: string): ProductEntity => {
     const product = productTable.find(({id}) => id === productId);
-    if(!product) throw "Product not found";
+    if(!product) throw {message: "Product not found", code: 404};
 
     return deepClone(product);
 }

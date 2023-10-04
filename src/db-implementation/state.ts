@@ -5,7 +5,7 @@ import {OrderEntity} from "../entities/order.entity.ts";
 
 export const productTable: ProductEntity[] = [
     {
-        id: '51422fcd-0366-4186-ad5b-c23059b6f64f',
+        id: '5c293ad0-19d0-41ee-baa3-4c648f9f7697',
         title: 'Book',
         description: 'A very interesting book',
         price: 100

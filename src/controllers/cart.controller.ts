@@ -1,30 +1,33 @@
 import * as cartService from "../services/cart.service.ts"
-export const getCart = (req, res) => {
-    const cart = cartService.getActiveCart(req.headers['x-user-id']);
-    res.json(cart);
-}
+import {createOrder} from "../services/cart.service.ts";
 
 export const postCart = (req, res) => {
-    const userId = req.headers['x-user-id'];
-    const cart = cartService.getActiveCart(userId);
-    if(!cart){
-        const emptyCart = cartService.createEmptyCart(userId);
+    const cart = cartService.createEmptyCart(req.user.id);
+    res.status(201);
+    res.formattedSent(cart);
+}
 
-        res.json(emptyCart)
+export const getCart = (req, res) => {
+    const cart = cartService.getActiveCart(req.user.id);
+    if(!cart){
+        const emptyCart = cartService.createEmptyCart(req.user.id);
+        res.formattedSent(emptyCart)
     }
     else {
-        res.json(cart);
+        res.formattedSent(cart);
     }
 }
 
 export const putCart = (req, res) => {
-    res.send("Change cart");
+    const activeCart = cartService.changeCart(req.user.activeCartId, req.body)
+    res.formattedSent(activeCart);
 }
 
-export const deleteCart = (req, res) => {
-    res.send("Delete cart");
+export const deleteCart = (req, res, ) => {
+    cartService.deleteCart(req.user.id);
+    res.formattedSent({success: true});
 }
 
 export const postCheckout = (req, res) => {
-    res.send("Checkout cart");
+    res.formattedSent({order: createOrder(req.user)})
 }

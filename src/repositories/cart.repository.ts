@@ -2,10 +2,12 @@ import {cartTable} from "../db-implementation/state.ts";
 import {deepClone} from "../helpers/deepClone.ts";
 import {CartEntity, CartItemEntity} from "../entities/cart.entity.ts";
 import {generateId} from "../helpers/idGenerator.ts";
+import * as productRepository from "./product.repository.ts";
+import * as userRepository from "./user.repository.ts";
 
 export const getCartById = (cartId: string): CartEntity => {
     const cart = cartTable.find(({id}) => id === cartId);
-    if (!cart) throw "Cart not found";
+    if (!cart) throw {message: "Cart not found", code: 404};
 
     return deepClone(cart);
 }
@@ -20,23 +22,30 @@ export const createCart = (
             id: generateId(), userId, isDeleted, items
         }
 
+
         cartTable.push(deepClone(cart));
+        userRepository.assignActiveCartToUser(userId, cart.id);
         return deepClone(cart);
     }
 
-export const editCart = (cartId: string, items: CartItemEntity) => {
-    const cart = cartTable.find(({id}) => id === cartId);
-    if (!cart) throw "Cart not found";
+export const editCart = (cartId: string, items: [string, number][]) => {
+    const index = cartTable.findIndex(({id}) => id === cartId);
+    if (index < 0) throw {message: "Cart not found", code: 404};
 
-    cart.items = deepClone(items);
+    cartTable[index].items = items.map(([productId, count])=> {
+        const product = productRepository.getProductById(productId);
+        return {
+            product,
+            count,
+        }
+    })
 
-    return deepClone(cart);
+    return deepClone(cartTable[index]);
 }
 
 export const deleteCart = (cartId: string) => {
     const cart = cartTable.find(({id}) => id === cartId);
-    if (!cart) throw "Cart not found";
-    if(cart.isDeleted) throw "Cart had already deleted"
+    if (!cart || cart.isDeleted) throw {message: "Cart not found", code: 404};
 
     cart.isDeleted = true;
 
