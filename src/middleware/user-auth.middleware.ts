@@ -1,0 +1,15 @@
+import {getUserById} from "../repositories/user.repository.ts";
+
+export const userAuth = (req, res, next) => {
+    try {
+        const userId = req.headers['x-user-id'];
+        req.user = getUserById(userId)
+        next();
+    } catch {
+        next({
+            message: "Header x-user-id is missing or no user with such id",
+            code: 401,
+        })
+
+    }
+}
