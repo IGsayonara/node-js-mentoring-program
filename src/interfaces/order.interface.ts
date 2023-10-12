@@ -3,20 +3,20 @@ import { ICartItem } from './cart.interface.ts';
 type ORDER_STATUS = 'created' | 'completed';
 
 export interface IOrder {
-  id: string, // uuid
+  id: string; // uuid
   userId: string;
   cartId: string;
-  items: ICartItem[] // products from CartEntity
+  items: ICartItem[]; // products from CartEntity
   payment: {
-    type: string,
-    address?: any,
-    creditCard?: any,
-  },
+    type: string;
+    address?: any;
+    creditCard?: any;
+  };
   delivery: {
-    type: string,
-    address: any,
-  },
-  comments: string,
+    type: string;
+    address: any;
+  };
+  comments: string;
   status: ORDER_STATUS;
   total: number;
 }

@@ -1,4 +1,4 @@
-import { IProduct } from './product.interface.ts'
+import { IProduct } from './product.interface.ts';
 
 export interface ICartItem {
   product: IProduct;

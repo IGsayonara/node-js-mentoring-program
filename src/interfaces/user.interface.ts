@@ -1,4 +1,4 @@
 export interface IUser {
   id: string; // uuid
-  activeCartId: string | null
+  activeCartId: string | null;
 }
