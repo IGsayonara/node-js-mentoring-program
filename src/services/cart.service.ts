@@ -1,10 +1,10 @@
 import * as userRepository from "../repositories/user.repository.ts"
 import * as cartRepository from "../repositories/cart.repository.ts"
 import * as orderRepository from "../repositories/order.repository.ts"
-import {CartEntity} from "../interfaces/cart.entity.ts";
-import {OrderEntity} from "../interfaces/order.entity.ts";
+import {ICart} from "../interfaces/cart.interface.ts";
+import {IOrder} from "../interfaces/order.interface.ts";
 import {generateId} from "../helpers/idGenerator.ts";
-import {UserEntity} from "../interfaces/user.entity.ts";
+import {IUser} from "../interfaces/user.interface.ts";
 import {countTotal} from "../helpers/count-total.ts";
 
 export const getActiveCart = async (userId: string) => {
@@ -22,7 +22,7 @@ export const createEmptyCart = async (userId: string) => {
     return await cartRepository.createCart(userId);
 }
 
-export const changeCart = async (activeCartId: string, newCart: Partial<CartEntity>): Promise<CartEntity> => {
+export const changeCart = async (activeCartId: string, newCart: Partial<ICart>): Promise<ICart> => {
     if (activeCartId !== newCart.id) throw {message: "Cart not found", code: 404};
 
     const newItems: [string, number][] = newCart.items.map((item) => {
@@ -36,9 +36,9 @@ export const deleteCart = async (userId: string) => {
     await cartRepository.deleteCart(userId);
 }
 
-export const createOrder = async (user: UserEntity): Promise<OrderEntity> => {
+export const createOrder = async (user: IUser): Promise<IOrder> => {
     const cart = await cartRepository.getCartById(user.activeCartId)
-    const order: OrderEntity = {
+    const order: IOrder = {
         id: generateId(),
         userId: user.id,
         cartId: user.activeCartId,

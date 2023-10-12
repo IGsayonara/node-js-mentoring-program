@@ -1,4 +1,4 @@
-import {CartItemEntity} from '../interfaces/cart.entity.ts';
+import {ICartItem} from '../interfaces/cart.interface.ts';
 import {Entity, Column, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
 import {User} from "./user.entity.ts";
 
@@ -11,7 +11,7 @@ export class Order {
     cartId: string;
 
     @Column({array: true, type: 'json'})
-    items: CartItemEntity[] // products from CartEntity
+    items: ICartItem[] // products from CartEntity
 
     @Column({type: 'json'})
     payment: {
@@ -45,7 +45,7 @@ export interface OrderEntity {
     id: string, // uuid
     userId: string;
     cartId: string;
-    items: CartItemEntity[] // products from CartEntity
+    items: ICartItem[] // products from CartEntity
     payment: {
         type: string,
         address?: any,

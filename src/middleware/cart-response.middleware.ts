@@ -1,8 +1,8 @@
-import {CartEntity} from "../interfaces/cart.entity.ts";
+import {ICart} from "../interfaces/cart.interface.ts";
 import {countTotal} from "../helpers/count-total.ts";
 
 export const formatCartResponse = (req, res, next) => {
-    res.sendCart = (cart: CartEntity) => {
+    res.sendCart = (cart: ICart) => {
         try {
             delete cart.isDeleted;
 

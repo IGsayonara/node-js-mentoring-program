@@ -1,12 +1,12 @@
-import { CartItemEntity } from './cart.entity.ts';
+import { ICartItem } from './cart.interface.ts';
 
 type ORDER_STATUS = 'created' | 'completed';
 
-export interface OrderEntity {
+export interface IOrder {
   id: string, // uuid
   userId: string;
   cartId: string;
-  items: CartItemEntity[] // products from CartEntity
+  items: ICartItem[] // products from CartEntity
   payment: {
     type: string,
     address?: any,

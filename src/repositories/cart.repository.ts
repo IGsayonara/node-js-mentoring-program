@@ -1,13 +1,13 @@
-import {CartEntity, CartItemEntity} from "../interfaces/cart.entity.ts";
+import {ICart, ICartItem} from "../interfaces/cart.interface.ts";
 import {AppDataSource} from "../database/data-source.ts";
-import {Cart} from "../entity/cart.entity.ts";
+import {Cart} from "../entities/cart.entity.ts";
 import {userRepository} from "./user.repository.ts";
 import {productRepository} from "./product.repository.ts";
 import {In} from "typeorm";
 
 export const cartRepository = AppDataSource.getRepository(Cart);
 
-export const getCartById = async (cartId: string): Promise<CartEntity> => {
+export const getCartById = async (cartId: string): Promise<ICart> => {
     const cart = await cartRepository.findOne({where: {id: cartId}, relations: {user: true}});
     if (!cart) throw {message: "Cart not found", code: 404};
     const userId = cart.user.id;
@@ -17,9 +17,9 @@ export const getCartById = async (cartId: string): Promise<CartEntity> => {
 
 export const createCart = async (
     userId: string,
-    items: CartItemEntity[] = [],
+    items: ICartItem[] = [],
     isDeleted = false
-): Promise<CartEntity> => {
+): Promise<ICart> => {
     const user = await userRepository.findOneBy({ id: userId });
     if (!user) {
         throw new Error('User not found');
@@ -34,7 +34,7 @@ export const createCart = async (
 
     return {...newCart, userId };
 };
-export const editCart = async (cartId: string, items: [string, number][]): Promise<CartEntity> => {
+export const editCart = async (cartId: string, items: [string, number][]): Promise<ICart> => {
     const cart = await cartRepository.findOneBy({id: cartId});
 
     const productIds = items.map(([id]) => id);
