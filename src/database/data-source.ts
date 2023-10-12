@@ -1,8 +1,8 @@
+import 'dotenv/config'; // migration needs
 import { DataSource } from 'typeorm';
 import postgresOptions from '../../ormconfig';
 
 export const AppDataSource = new DataSource(postgresOptions);
-
 AppDataSource.initialize()
   .then(() => {
     console.log('Data Source has been initialized!');

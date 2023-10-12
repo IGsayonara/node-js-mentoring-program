@@ -7,10 +7,13 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string; // uuid
 
-  @OneToOne((type) => Cart, (cart) => cart.user)
+  @Column()
+  name: string;
+
+  @OneToOne(() => Cart, (cart) => cart.user)
   @JoinColumn()
   activeCart: Cart;
 
-  @OneToMany((type) => Order, (order) => order.user)
+  @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
 }

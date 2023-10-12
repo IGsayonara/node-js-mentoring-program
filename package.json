@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "typeorm": "ts-node node_modules/typeorm/cli.js"
   },
   "repository": {
     "type": "git",
@@ -46,6 +47,7 @@
     "express-async-errors": "^3.1.1",
     "joi": "^17.10.2",
     "pg": "^8.11.3",
+    "reflect-metadata": "^0.1.13",
     "save": "^2.9.0",
     "typeorm": "^0.3.17"
   }
