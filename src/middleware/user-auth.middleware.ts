@@ -1,9 +1,9 @@
 import {getUserById} from "../repositories/user.repository.ts";
 
-export const userAuth = (req, res, next) => {
+export const userAuth = async (req, res, next) => {
     try {
         const userId = req.headers['x-user-id'];
-        req.user = getUserById(userId)
+        req.user = await getUserById(userId)
         next();
     } catch {
         next({

@@ -1,4 +1,4 @@
-import {CartEntity} from "../entities/cart.entity.ts";
+import {CartEntity} from "../interfaces/cart.entity.ts";
 
 
 export const countTotal = (cart: CartEntity): number => {

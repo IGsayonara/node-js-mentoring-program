@@ -1,53 +1,70 @@
-import {cartTable} from "../db-implementation/state.ts";
-import {deepClone} from "../helpers/deepClone.ts";
-import {CartEntity, CartItemEntity} from "../entities/cart.entity.ts";
-import {generateId} from "../helpers/idGenerator.ts";
-import * as productRepository from "./product.repository.ts";
-import * as userRepository from "./user.repository.ts";
+import {CartEntity, CartItemEntity} from "../interfaces/cart.entity.ts";
+import {AppDataSource} from "../database/data-source.ts";
+import {Cart} from "../entity/cart.entity.ts";
+import {userRepository} from "./user.repository.ts";
+import {productRepository} from "./product.repository.ts";
+import {In} from "typeorm";
 
-export const getCartById = (cartId: string): CartEntity => {
-    const cart = cartTable.find(({id}) => id === cartId);
+export const cartRepository = AppDataSource.getRepository(Cart);
+
+export const getCartById = async (cartId: string): Promise<CartEntity> => {
+    const cart = await cartRepository.findOne({where: {id: cartId}, relations: {user: true}});
     if (!cart) throw {message: "Cart not found", code: 404};
-
-    return deepClone(cart);
+    const userId = cart.user.id;
+    delete cart.user;
+    return {...cart, userId};
 }
 
-export const createCart = (
-        userId: string,
-        items: CartItemEntity[] = [],
-        isDeleted = false
-    ): CartEntity =>
-    {
-        const cart = {
-            id: generateId(), userId, isDeleted, items
-        }
-
-
-        cartTable.push(deepClone(cart));
-        userRepository.assignActiveCartToUser(userId, cart.id);
-        return deepClone(cart);
+export const createCart = async (
+    userId: string,
+    items: CartItemEntity[] = [],
+    isDeleted = false
+): Promise<CartEntity> => {
+    const user = await userRepository.findOneBy({ id: userId });
+    if (!user) {
+        throw new Error('User not found');
     }
 
-export const editCart = (cartId: string, items: [string, number][]) => {
-    const index = cartTable.findIndex(({id}) => id === cartId);
-    if (index < 0) throw {message: "Cart not found", code: 404};
+    const cart = cartRepository.create({ user, items, isDeleted });
+    const insertResult = await cartRepository.insert(cart);
+    const newCart = insertResult.raw[0]
+    user.activeCart = newCart;
 
-    cartTable[index].items = items.map(([productId, count])=> {
-        const product = productRepository.getProductById(productId);
+    await userRepository.save(user);
+
+    return {...newCart, userId };
+};
+export const editCart = async (cartId: string, items: [string, number][]): Promise<CartEntity> => {
+    const cart = await cartRepository.findOneBy({id: cartId});
+
+    const productIds = items.map(([id]) => id);
+    const products = await productRepository.findBy({
+        id: In(productIds)
+    })
+
+    if(products.length !== items.length) {
+        throw "Product not found"
+    }
+
+    cart.items = products.map((product, index) => {
         return {
-            product,
-            count,
+            product: product,
+            count: items[index][1]
         }
     })
 
-    return deepClone(cartTable[index]);
+    const updatedCart = await cartRepository.save(cart);
+    const user = await userRepository.findOneBy({activeCart: {id: cartId}})
+
+    return {...updatedCart, userId: user.id}
 }
 
-export const deleteCart = (cartId: string) => {
-    const cart = cartTable.find(({id}) => id === cartId);
-    if (!cart || cart.isDeleted) throw {message: "Cart not found", code: 404};
-
+export const deleteCart = async (userId: string) => {
+    const user = await userRepository.findOneBy({id: userId});
+    const cart = await cartRepository.findOneBy({user: {id: userId}});
+    user.activeCart = null;
     cart.isDeleted = true;
 
-    return deepClone(cart);
+    await userRepository.save(user);
+    await cartRepository.save(cart);
 }

@@ -1,4 +1,6 @@
+import "dotenv/config"
 import express from "express"
+import 'express-async-errors';
 import {appRouter} from "./src/router";
 import {errorHandler} from "./src/middleware/error-handler.middleware.ts";
 
