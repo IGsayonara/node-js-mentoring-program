@@ -48,7 +48,7 @@
     "joi": "^17.10.2",
     "pg": "^8.11.3",
     "reflect-metadata": "^0.1.13",
-    "save": "^2.9.0",
-    "typeorm": "^0.3.17"
+    "typeorm": "^0.3.17",
+    "typeorm-extension": "^3.0.2"
   }
 }
