@@ -1,16 +1,16 @@
-import {productTable} from "../db-implementation/state.ts";
-import {deepClone} from "../helpers/deepClone.ts";
-import {ProductEntity} from "../entities/product.entity.ts";
+import { IProduct } from '../interfaces/product.interface.ts';
+import { AppDataSource } from '../database/data-source.ts';
+import { Product } from '../entities/product.entity.ts';
 
-export const getProductById = (productId: string): ProductEntity => {
-    const product = productTable.find(({id}) => id === productId);
-    if(!product) throw {message: "Product not found", code: 404};
+export const productRepository = AppDataSource.getRepository(Product);
 
-    return deepClone(product);
-}
+export const getProductById = async (productId: string): Promise<IProduct> => {
+  const product = productRepository.findOneBy({ id: productId });
+  if (!product) throw { message: 'Product not found', code: 404 };
 
-export const getAllProducts = (): ProductEntity[] => {
-    return productTable.map((product) => {
-        return deepClone(product);
-    })
-}
+  return product;
+};
+
+export const getAllProducts = async (): Promise<IProduct[]> => {
+  return await productRepository.find();
+};

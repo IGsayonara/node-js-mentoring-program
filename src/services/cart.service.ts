@@ -1,69 +1,63 @@
-import * as userRepository from "../repositories/user.repository.ts"
-import * as cartRepository from "../repositories/cart.repository.ts"
-import * as orderRepository from "../repositories/order.repository.ts"
-import {CartEntity} from "../entities/cart.entity.ts";
-import {OrderEntity} from "../entities/order.entity.ts";
-import {generateId} from "../helpers/idGenerator.ts";
-import {UserEntity} from "../entities/user.entity.ts";
-import {countTotal} from "../helpers/count-total.ts";
-import {deepClone} from "../helpers/deepClone.ts";
+import * as userRepository from '../repositories/user.repository.ts';
+import * as cartRepository from '../repositories/cart.repository.ts';
+import * as orderRepository from '../repositories/order.repository.ts';
+import { ICart } from '../interfaces/cart.interface.ts';
+import { IOrder } from '../interfaces/order.interface.ts';
+import { generateId } from '../helpers/idGenerator.ts';
+import { IUser } from '../interfaces/user.interface.ts';
+import { countTotal } from '../helpers/count-total.ts';
 
-export const getActiveCart = (userId: string) => {
-    const user = userRepository.getUserById(userId);
+export const getActiveCart = async (userId: string) => {
+  const user = await userRepository.getUserById(userId);
 
-    if (!user.activeCartId) return null;
+  if (!user.activeCartId) return null;
 
-    const cart = cartRepository.getCartById(user.activeCartId);
-    if (cart.isDeleted) return null;
+  const cart = await cartRepository.getCartById(user.activeCartId);
+  if (cart.isDeleted) return null;
 
-    return cart;
-}
+  return cart;
+};
 
-export const createEmptyCart = (userId: string) => {
-    const cart = cartRepository.createCart(userId);
-    userRepository.assignActiveCartToUser(userId, cart.id)
+export const createEmptyCart = async (userId: string) => {
+  return await cartRepository.createCart(userId);
+};
 
-    return cart;
-}
+export const changeCart = async (activeCartId: string, newCart: Partial<ICart>): Promise<ICart> => {
+  if (activeCartId !== newCart.id) throw { message: 'Cart not found', code: 404 };
 
-export const changeCart = (activeCartId: string, newCart: Partial<CartEntity>): CartEntity => {
-    if (activeCartId !== newCart.id) throw {message: "Cart not found", code: 404};
+  const newItems: [string, number][] = newCart.items.map((item) => {
+    return [item.product.id, item.count];
+  });
 
-    const newItems: [string, number][] = newCart.items.map((item) => {
-        return [item.product.id, item.count];
-    })
+  return await cartRepository.editCart(activeCartId, newItems);
+};
 
-    return cartRepository.editCart(activeCartId, newItems);
-}
+export const deleteCart = async (userId: string) => {
+  await cartRepository.deleteCart(userId);
+};
 
-export const deleteCart = (userId: string) => {
-    userRepository.assignActiveCartToUser(userId, null);
-}
+export const createOrder = async (user: IUser): Promise<IOrder> => {
+  const cart = await cartRepository.getCartById(user.activeCartId);
+  const order: IOrder = {
+    id: generateId(),
+    userId: user.id,
+    cartId: user.activeCartId,
+    items: cart.items,
+    payment: {
+      type: 'paypal',
+      address: 'London',
+      creditCard: '1234-1234-1234-1234',
+    },
+    delivery: {
+      type: 'post',
+      address: 'London',
+    },
+    comments: '',
+    status: 'created',
+    total: countTotal(cart),
+  };
 
-export const createOrder = (user: UserEntity): OrderEntity => {
-    const cart = cartRepository.getCartById(user.activeCartId)
-    const order: OrderEntity = {
-        id: generateId(),
-        userId: user.id,
-        cartId: user.activeCartId,
-        items: cart.items,
-        "payment": {
-            "type": "paypal",
-            "address": "London",
-            "creditCard": "1234-1234-1234-1234"
-        },
-        "delivery": {
-            "type": "post",
-            "address": "London"
-        },
-        "comments": "",
-        "status": "created",
-        total: countTotal(cart),
-    }
+  if (!order.items.length) throw { message: 'Cart is empty', code: 500 };
 
-    if(!order.items.length) throw {message: "Cart is empty", code: 500}
-
-    orderRepository.createOrder(order);
-
-    return deepClone(order);
-}
+  return await orderRepository.createOrder(order);
+};

@@ -4,7 +4,9 @@
     "allowImportingTsExtensions": true,
     "lib": [
       "ES2021.String"
-    ]
+    ],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
   },
   "exclude": [
     "node_modules"

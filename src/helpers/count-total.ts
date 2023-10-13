@@ -1,12 +1,11 @@
-import {CartEntity} from "../entities/cart.entity.ts";
+import { ICart } from '../interfaces/cart.interface.ts';
 
+export const countTotal = (cart: ICart): number => {
+  let totalPrice = 0;
 
-export const countTotal = (cart: CartEntity): number => {
-    let totalPrice = 0;
+  cart.items.forEach((item) => {
+    totalPrice += item.product.price * item.count;
+  });
 
-    cart.items.forEach((item) => {
-        totalPrice += (item.product.price * item.count)
-    })
-
-    return totalPrice;
-}
+  return totalPrice;
+};

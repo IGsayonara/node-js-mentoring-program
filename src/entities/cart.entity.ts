@@ -1,13 +1,18 @@
-import { ProductEntity } from './product.entity.ts'
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
+import { ICartItem } from '../interfaces/cart.interface.ts';
+import { User } from './user.entity.ts';
 
-export interface CartItemEntity {
-  product: ProductEntity;
-  count: number;
-}
-
-export interface CartEntity {
+@Entity()
+export class Cart {
+  @PrimaryGeneratedColumn('uuid')
   id: string; // uuid
-  userId: string;
+
+  @Column()
   isDeleted: boolean;
-  items: CartItemEntity[];
+
+  @Column({ type: 'json', array: false, default: () => "'[]'" })
+  items: ICartItem[];
+
+  @OneToOne(() => User, (user) => user.activeCart)
+  user: User;
 }
