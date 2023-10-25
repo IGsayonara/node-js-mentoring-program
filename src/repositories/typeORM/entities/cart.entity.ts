@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
-import { ICartItem } from '../interfaces/cart.interface.ts';
+import { ICartItem } from '../../../interfaces/cart.interface.ts';
 import { User } from './user.entity.ts';
 
 @Entity()

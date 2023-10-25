@@ -1,9 +1,9 @@
-import { getUserById } from '../repositories/user.repository.ts';
-
+import { getUserRepository } from '../repositories/adapters/user.adapter.ts';
+const userRepository = getUserRepository();
 export const userAuth = async (req, res, next) => {
   try {
     const userId = req.headers['x-user-id'];
-    req.user = await getUserById(userId);
+    req.user = await userRepository.getUserById(userId);
     next();
   } catch {
     next({

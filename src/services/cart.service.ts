@@ -1,11 +1,15 @@
-import * as userRepository from '../repositories/user.repository.ts';
-import * as cartRepository from '../repositories/cart.repository.ts';
-import * as orderRepository from '../repositories/order.repository.ts';
 import { ICart } from '../interfaces/cart.interface.ts';
 import { IOrder } from '../interfaces/order.interface.ts';
 import { generateId } from '../helpers/idGenerator.ts';
 import { IUser } from '../interfaces/user.interface.ts';
 import { countTotal } from '../helpers/count-total.ts';
+import { getCartRepository } from '../repositories/adapters/cart.adapter.ts';
+import { getOrderRepository } from '../repositories/adapters/order.adapter.ts';
+import { getUserRepository } from '../repositories/adapters/user.adapter.ts';
+
+const cartRepository = getCartRepository();
+const orderRepository = getOrderRepository();
+const userRepository = getUserRepository();
 
 export const getActiveCart = async (userId: string) => {
   const user = await userRepository.getUserById(userId);

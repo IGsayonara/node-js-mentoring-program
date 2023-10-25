@@ -4,7 +4,7 @@ import { cartRouter } from './cart.route.ts';
 import { userAuth } from '../middleware/user-auth.middleware.ts';
 import { formatResponse } from '../middleware/response.middleware.ts';
 
-export const appRouter = new Router();
+export const appRouter = Router();
 
 appRouter.use('/', userAuth);
 appRouter.use('/', formatResponse);

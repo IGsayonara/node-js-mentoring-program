@@ -3,7 +3,7 @@ import * as cartController from '../controllers/cart.controller.ts';
 import { validateCart } from '../middleware/validate-cart.middleware.ts';
 import { formatCartResponse } from '../middleware/cart-response.middleware.ts';
 
-export const cartRouter = new Router();
+export const cartRouter = Router();
 
 cartRouter.use('/', formatCartResponse);
 

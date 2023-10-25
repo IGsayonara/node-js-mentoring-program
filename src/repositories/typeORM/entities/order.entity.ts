@@ -1,4 +1,4 @@
-import { ICartItem } from '../interfaces/cart.interface.ts';
+import { ICartItem } from '../../../interfaces/cart.interface.ts';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { User } from './user.entity.ts';
 

@@ -1,5 +1,6 @@
-import * as productRepository from '../repositories/product.repository.ts';
+import { getProductRepository } from '../repositories/adapters/product.adapter.ts';
 
+const productRepository = getProductRepository();
 export const getProductById = (id: string) => {
   return productRepository.getProductById(id);
 };
