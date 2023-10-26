@@ -17,12 +17,12 @@ const orderSchema = new Schema({
     },
   ],
   payment: {
-    type: String,
+    type: Schema.Types.Mixed,
     address: Schema.Types.Mixed,
     creditCard: Schema.Types.Mixed,
   },
   delivery: {
-    type: String,
+    type: Schema.Types.Mixed,
     address: Schema.Types.Mixed,
   },
   comments: String,

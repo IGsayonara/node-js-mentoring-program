@@ -30,7 +30,7 @@ export class CartMapper implements ICart {
   }
 
   protected setItems() {
-    this.items = deepClone(this.base.items);
+    this.items = this.base.items;
   }
 
   public getCart(): ICart {

@@ -8,8 +8,11 @@ import { ProductModelMapper } from './product.repository.ts';
 import { deepClone } from '../../helpers/deepClone.ts';
 
 export class CartModelMapper extends CartMapper {
-  protected override setUserId() {
+  protected override setId() {
     this.id = this.base._id;
+  }
+  protected override setUserId() {
+    this.userId = this.base.user;
   }
 
   protected override setItems() {
@@ -23,6 +26,7 @@ export class CartModelMapper extends CartMapper {
 export class CartRepositoryODM implements ICartRepository {
   getCartById = async (cartId: string): Promise<ICart> => {
     const cart = await CartModel.findById(cartId);
+    console.log(cart);
     return new CartModelMapper(cart).getCart();
   };
 
