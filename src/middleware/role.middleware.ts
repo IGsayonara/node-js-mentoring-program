@@ -23,7 +23,7 @@ export const adminGuard = async (req, res, next) => {
   } catch {
     next({
       message: 'You are not admin',
-      code: 401,
+      code: 403,
     });
   }
 };
