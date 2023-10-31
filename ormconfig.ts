@@ -8,7 +8,7 @@ const postgresOptions: DataSourceOptions & SeederOptions = {
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  entities: ['src/entities/*.ts'],
+  entities: ['src/repositories/typeORM/entities/*.ts'],
   migrations: ['src/database/typeORM/migrations/*.ts'],
   seeds: ['src/database/typeORM/seeds/**/*{.ts,.js}'],
   factories: ['src/database/typeORM/factories/**/*{.ts,.js}'],
