@@ -3,19 +3,8 @@ import express from 'express';
 import 'express-async-errors';
 import { appRouter } from './src/routers';
 import { errorHandler } from './src/middleware/error-handler.middleware.ts';
-import mongoose from 'mongoose';
 import { shutdown } from './src/helpers/shutdown.ts';
-
-mongoose
-  .connect('mongodb://127.0.0.1:27017', {
-    auth: { username: 'root', password: 'example_password' },
-  })
-  .then((data) => {
-    console.log('connected mongodb');
-  })
-  .catch((err) => {
-    console.log('error connect mongodb', err);
-  });
+import { Logger } from './src/common/Logger/logger-factory.ts';
 
 const app = express();
 const port = 3000;
@@ -26,7 +15,8 @@ app.use('/api', appRouter);
 app.use(errorHandler);
 
 const server = app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  Logger.debug(process.env.NODE_ENV);
+  Logger.debug(`Example app listening on port ${port}`);
 });
 
 process.on('SIGINT', () => {
