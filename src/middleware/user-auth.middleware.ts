@@ -1,13 +1,18 @@
 import { getUserRepository } from '../repositories/adapters/user.adapter.ts';
+import jwt from 'jsonwebtoken';
+
 const userRepository = getUserRepository();
 export const userAuth = async (req, res, next) => {
   try {
-    const userId = req.headers['x-user-id'];
-    req.user = await userRepository.getUserById(userId);
+    const authHeader = req.headers['authorization'] as string;
+    const token = authHeader.startsWith('Bearer') ? authHeader.replace('Bearer ', '') : null;
+    const verified = await jwt.verify(token, process.env.JWT_SECRET);
+
+    req.user = await userRepository.getUserById(verified.userId);
     next();
   } catch {
     next({
-      message: 'Header x-user-id is missing or no user with such id',
+      message: 'Token is not valid or expired',
       code: 401,
     });
   }
