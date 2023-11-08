@@ -1,5 +1,5 @@
-import { ICart } from '../interfaces/cart.interface.ts';
-import { countTotal } from '../helpers/count-total.ts';
+import { ICart } from '../../interfaces/cart.interface.ts';
+import { countTotal } from '../../helpers/count-total.ts';
 
 export const formatCartResponse = (req, res, next) => {
   res.sendCart = (cart: ICart) => {

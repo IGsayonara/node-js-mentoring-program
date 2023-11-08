@@ -2,7 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import 'express-async-errors';
 import { appRouter } from './src/routers';
-import { errorHandler } from './src/middleware/error-handler.middleware.ts';
+import { errorHandler } from './src/common/middleware/error-handler.middleware.ts';
 import { shutdown } from './src/helpers/shutdown.ts';
 import { Logger } from './src/common/Logger/logger-factory.ts';
 
@@ -16,7 +16,6 @@ app.use(errorHandler);
 
 const server = app.listen(port, () => {
   Logger.debug(process.env.NODE_ENV);
-  Logger.debug(`Example app listening on port ${port}`);
 });
 
 process.on('SIGINT', () => {
