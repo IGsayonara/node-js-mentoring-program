@@ -5,6 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "start": "nodemon",
+    "build": "ts-node index.ts",
     "start:prod": "set NODE_ENV=prod&&nodemon",
     "test": "jest",
     "test:coverage": "jest --coverage",
@@ -42,7 +43,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "csvtojson": "^2.0.10",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
