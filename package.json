@@ -6,8 +6,10 @@
   "scripts": {
     "start": "nodemon",
     "build": "ts-node index.ts",
+    "lint:fix": "eslint . --fix",
+    "lint": "eslint .",
     "start:prod": "set NODE_ENV=prod&&nodemon",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:coverage": "jest --coverage",
     "typeorm": "ts-node node_modules/typeorm/cli.js",
     "prepare": "husky install"
