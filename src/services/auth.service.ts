@@ -1,7 +1,7 @@
 import { IUser } from '../interfaces/user.interface.ts';
 import { getUserRepository } from '../repositories/adapters/user.adapter.ts';
 import { IAuth } from '../interfaces/auth.interface.ts';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 const userRepository = getUserRepository();

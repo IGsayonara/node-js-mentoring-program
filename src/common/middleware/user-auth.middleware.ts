@@ -1,4 +1,4 @@
-import { getUserRepository } from '../repositories/adapters/user.adapter.ts';
+import { getUserRepository } from '../../repositories/adapters/user.adapter.ts';
 import jwt from 'jsonwebtoken';
 
 const userRepository = getUserRepository();

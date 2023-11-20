@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import * as cartController from '../controllers/cart.controller.ts';
-import { validateCart } from '../middleware/validate-cart.middleware.ts';
-import { formatCartResponse } from '../middleware/cart-response.middleware.ts';
-import { adminGuard } from '../middleware/role.middleware.ts';
+import { validateCart } from '../common/middleware/validate-cart.middleware.ts';
+import { formatCartResponse } from '../common/middleware/cart-response.middleware.ts';
+import { adminGuard } from '../common/middleware/role.middleware.ts';
 
 export const cartRouter = Router();
 

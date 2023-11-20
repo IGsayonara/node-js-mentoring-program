@@ -2,19 +2,9 @@ import 'dotenv/config';
 import express from 'express';
 import 'express-async-errors';
 import { appRouter } from './src/routers';
-import { errorHandler } from './src/middleware/error-handler.middleware.ts';
-import mongoose from 'mongoose';
-
-mongoose
-  .connect('mongodb://127.0.0.1:27017', {
-    auth: { username: 'root', password: 'example_password' },
-  })
-  .then((data) => {
-    console.log('connected mongodb');
-  })
-  .catch((err) => {
-    console.log('error connect mongodb', err);
-  });
+import { errorHandler } from './src/common/middleware/error-handler.middleware.ts';
+import { shutdown } from './src/helpers/shutdown.ts';
+import { Logger } from './src/common/Logger/logger-factory.ts';
 
 const app = express();
 const port = 3000;
@@ -24,6 +14,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api', appRouter);
 app.use(errorHandler);
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+const server = app.listen(port, () => {
+  Logger.debug(process.env.NODE_ENV);
+});
+
+process.on('SIGINT', () => {
+  console.log('Received SIGINT. Closing server gracefully...');
+  shutdown(server);
+});
+
+process.on('SIGTERM', () => {
+  console.log('Received SIGTERM. Closing server gracefully...');
+  shutdown(server);
 });

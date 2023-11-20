@@ -1,4 +1,4 @@
-import { userRepository } from '../repositories/typeORM/user.repository.ts';
+import { userRepository } from '../../repositories/typeORM/user.repository.ts';
 export const adminGuard = async (req, res, next) => {
   try {
     const user = await userRepository.findOne({
