@@ -7,7 +7,7 @@
     "start": "nodemon",
     "build": "ts-node index.ts",
     "start:prod": "set NODE_ENV=prod&&nodemon",
-    "test": "jest --passWithNoTests",
+    "test": "jest",
     "test:coverage": "jest --coverage",
     "typeorm": "ts-node node_modules/typeorm/cli.js",
     "prepare": "husky install"
