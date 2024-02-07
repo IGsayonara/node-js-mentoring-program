@@ -9,9 +9,8 @@ export class UserRepositoryORM implements IUserRepository {
   getUserById = async (userId: string): Promise<IUser> => {
     const user = await userRepository.findOne({
       where: { id: userId },
-      relations: { activeCart: true },
     });
-    return { ...user, activeCartId: user.activeCart?.id || null };
+    return { ...user };
   };
 
   getUserByEmail = async (email: string): Promise<IUser & { password: string }> => {
@@ -19,7 +18,7 @@ export class UserRepositoryORM implements IUserRepository {
       where: { email },
       select: ['password', 'name', 'email', 'id'],
     });
-    return { ...user, activeCartId: user.activeCart?.id || null };
+    return { ...user };
   };
 
   register = async (user: IUser & IAuth) => {

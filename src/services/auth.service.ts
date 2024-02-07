@@ -1,10 +1,10 @@
 import { IUser } from '../interfaces/user.interface.ts';
-import { getUserRepository } from '../repositories/adapters/user.adapter.ts';
+import { UserRepositoryORM } from '../repositories/typeORM/user.repository.ts';
 import { IAuth } from '../interfaces/auth.interface.ts';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-const userRepository = getUserRepository();
+const userRepository = new UserRepositoryORM();
 export const login = async (authData: IAuth): Promise<string> => {
   const user = await userRepository.getUserByEmail(authData.email);
   if (!user) {

@@ -4,7 +4,6 @@ import 'express-async-errors';
 import { appRouter } from './src/routers';
 import { errorHandler } from './src/common/middleware/error-handler.middleware.ts';
 import { shutdown } from './src/helpers/shutdown.ts';
-import { Logger } from './src/common/Logger/logger-factory.ts';
 
 const app = express();
 const port = 3000;
@@ -15,7 +14,7 @@ app.use('/api', appRouter);
 app.use(errorHandler);
 
 const server = app.listen(port, () => {
-  Logger.debug(process.env.NODE_ENV);
+  console.log(`Server started on port: ${port}`);
 });
 
 process.on('SIGINT', () => {

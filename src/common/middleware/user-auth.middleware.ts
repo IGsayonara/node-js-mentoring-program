@@ -1,7 +1,8 @@
-import { getUserRepository } from '../../repositories/adapters/user.adapter.ts';
 import jwt from 'jsonwebtoken';
 
-const userRepository = getUserRepository();
+import { UserRepositoryORM } from '../../repositories/typeORM/user.repository.ts';
+const userRepository = new UserRepositoryORM();
+
 export const userAuth = async (req, res, next) => {
   try {
     const authHeader = req.headers['authorization'] as string;
